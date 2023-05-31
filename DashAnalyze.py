@@ -4,9 +4,22 @@ import plotly.express as px
 import pandas as pd
 
 # Directory containing the Excel files
-directory = 'NEISS_All_Data/Fact Tables/'
+fact_directory = 'NEISS_All_Data/Fact Tables/'
+
+dfs = []
 
 start_time = time.time()
+for filename in os.listdir(fact_directory):
+    filepath = os.path.join(fact_directory, filename)
+    df = pd.read_excel(filepath)
+    dfs.append(df)
+data_load_finish = time.time() - start_time
+
+print(dfs)
+# Concatenate all of the dataframes into a single data frame
+all_neiss = pd.concat(dfs, ignore_index=True)
+concatenate_finish = time.time() - data_load_finish
+
 neiss_2022 = pd.read_excel('NEISS_All_Data/Fact Tables/NEISS_2022.XLSX')
 end_time = time.time()
 table_load_time = end_time - start_time
@@ -26,7 +39,7 @@ for dataframe_name, dataframe in dataframes.items():
 
 # The dim tables names are:
 '''
-FireDim
+FireDim 
 BdypartDim
 DiagnosisDim
 RaceDim
@@ -39,7 +52,8 @@ HispanicDim
 AgeLTwoDim
 '''
 
-    
+neiss_2022_withProduct = pd.merge(neiss_2022, ProductDim, how='left', left_on='Product_1', right_on='Code', indicator=True)
+neiss_2022_withProduct.info()
 
 app = Dash(__name__)
 
