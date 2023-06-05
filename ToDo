@@ -1,0 +1,44 @@
+Dash Analysis
+
+Text analysis of bed
+Which product causes the most fatalities?
+What products are contributing most to the increase in fatalities?
+Has this changed over time?
+Is there a month that has the most injuries?
+Which body part gets injured the most?
+Is there a race disparity?
+Is the number of non-binary people going up over time? 
+Sex related injuries? - text analysis
+Are bed and sofa related injuries from people moving?
+What is contributing most to the decrease in injuries?
+
+
+
+-----
+
+Fact Table Columns:
+Index(['index', 'CPSC_Case_Number', 'Treatment_Date', 'Age', 'Sex', 'Race',
+       'Other_Race', 'Hispanic', 'Body_Part', 'Diagnosis', 'Diagoth',
+       'Body_Part_2', 'Diagnosis_2', 'Diag2oth', 'Disposition', 'Location',
+       'Fire_Involvement', 'Alcohol', 'Drug', 'Product_1', 'Product_2',
+       'Product_3', 'Narrative', 'Stratum', 'PSU', 'Weight', 'Other_Diagnosis',
+       'Other_Diagnosis_2', 'year', 'Product_All'],
+      dtype='object')
+
+Remember that the LEFT JOIN needs to come before the WHERE and ORDER BY clauses
+
+
+All of the tables
+0 	all_neiss_x
+1 	AgeLTwoDim
+2 	DispositionDim
+3 	RaceDim
+4 	FireDim
+5 	LocationDim
+6 	GenderDim
+7 	HispanicDim
+8 	BdypartDim
+9 	DiagnosisDim
+10 	Alc_DrugDim
+11 	ProductDim
+12 	neiss_all

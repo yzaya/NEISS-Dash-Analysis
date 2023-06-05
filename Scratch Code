@@ -1,0 +1,42 @@
+Squashed plot
+
+
+import matplotlib.pyplot as plt
+
+# Convert the 'year' column to integers
+view['year'] = view['year'].astype(int)
+
+# Pivot the data to have products as columns and years as rows
+pivot_data = view.pivot(index='year', columns='PRODUCT', values='count')
+
+# Calculate the total count for each product across all years
+product_totals = pivot_data.sum().sort_values(ascending=False)
+
+# Sort the pivot_data columns based on the product_totals order
+pivot_data = pivot_data[product_totals.index]
+
+# Plotting the line chart
+fig, ax = plt.subplots(figsize=(12, 8))
+pivot_data.plot(kind='line', ax=ax, marker='o')
+
+ax.set_xlabel('Year')
+ax.set_ylabel('Count')
+ax.set_title('Top 15 Products Over the Years')
+
+# Convert x-axis labels to integers and adjust rotation
+ax.set_xticks(view['year'].unique())
+ax.set_xticklabels(view['year'].unique(), rotation=45, ha='right')
+
+# Move the legend outside the plot area
+ax.legend(title='Product', bbox_to_anchor=(1.02, 1), loc='upper left')
+
+plt.tight_layout()
+
+plt.show()
+
+SELECT PRODUCT, count(CPSC_CASE_NUMBER) as count
+FROM neiss_all as fact
+LEFT JOIN ProductDim as dim ON dim.Code = fact.Product_All
+GROUP BY Product_All
+Order By count Desc
+LIMIT 20
