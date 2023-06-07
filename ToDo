@@ -1,16 +1,27 @@
 Dash Analysis
 
-Text analysis of bed
-Which product causes the most fatalities?
-What products are contributing most to the increase in fatalities?
-Has this changed over time?
-Is there a month that has the most injuries?
+
+
 Which body part gets injured the most?
+Which body part results in the most fatalities?
 Is there a race disparity?
+- What are the proportions according to population?
 Is the number of non-binary people going up over time? 
+Heatmap / correlation plot
+Is there a correlation between head injuries and fatalities?
+
+Text Analysis:
 Sex related injuries? - text analysis
+Text analysis of bed - how are people being injured on their beds?
 Are bed and sofa related injuries from people moving?
-What is contributing most to the decrease in injuries?
+- use %move%
+
+Clean:
+Numbers on Seasonality by Day of Week graph
+Consistency in titles
+all_neiss becomes neiss_all
+neiss_call becomes a view
+neiss_bdy
 
 
 
@@ -42,3 +53,12 @@ All of the tables
 10 	Alc_DrugDim
 11 	ProductDim
 12 	neiss_all
+
+
+bdy part1 
+bdy part2
+
+Summary:
+This is a workbook to practice SQL, and data handling and visualization in python. 
+It is not just for presentation of the analysis. 
+A lot of extra content is included to show the various processes involved. 
