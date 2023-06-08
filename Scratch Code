@@ -40,3 +40,56 @@ LEFT JOIN ProductDim as dim ON dim.Code = fact.Product_All
 GROUP BY Product_All
 Order By count Desc
 LIMIT 20
+
+
+Two combine the four columns (2 body part & 2 diagnosis):
+
+It will be tricky to answer this question because body parts affected are collected into two columns, while diagnosis is collected in two main columns, and two 'other' columns. The table we are pulling from has already expanded the body parts column. We must be careful to look out for unecassarily duplicated data. Because we are not creating a view in this case, we have to combine the results of two different tables. This one, which takes the counts for the grouped Diagnosis column:
+
+The two results are collected into a subquery and then concatenated using UNION ALL. The counts for each table are separated into their own columns, D1 and D2. When the counts for one table are present in one column, the other column is set to 0 for that table. When the main query runs, grouping once again by diagnosis, the sums of the two columns are added using SUM(D1+D2). It can be seen that the results in the dataframe below the query are equal to the results the previous two summed together.
+
+view = pd.read_sql(
+'''
+
+SELECT BDYPT, DISP, count(CPSC_Case_Number) AS count, DIAG
+FROM neiss_bdy
+LEFT JOIN BdypartDim bdy ON bdy.Code = Body_Part_All
+LEFT JOIN DispositionDim dis ON dis.Code = Disposition
+LEFT JOIN FireDim as fire ON fire.Code = Fire_Involvement
+LEFT JOIN DiagnosisDim as diag ON diag.Code = Diagnosis_2
+WHERE Disposition = 8 AND BDYPT LIKE "%ALL PARTS%" AND DIAG IS NOT NULL
+GROUP BY Diagnosis_2
+ORDER BY count DESC
+
+
+'''
+,neiss_conn)
+view
+
+view = pd.read_sql(
+
+'''
+SELECT DIAG, SUM(D1+D2) as count
+FROM (
+    SELECT BDYPT, Diagnosis as Diagnosis_All, COUNT(CPSC_Case_Number) AS D1, 0 as D2, DIAG
+    FROM neiss_bdy
+    LEFT JOIN BdypartDim bdy ON bdy.Code = Body_Part_All
+    LEFT JOIN DiagnosisDim as diag ON diag.Code = Diagnosis
+    WHERE Disposition = 8 AND BDYPT LIKE "%ALL PARTS%"
+    GROUP BY Diagnosis
+
+    UNION ALL
+
+    SELECT BDYPT, Diagnosis_2 as Diagnosis_All, 0 as D1, COUNT(CPSC_Case_Number) AS D2, DIAG
+    FROM neiss_bdy
+    LEFT JOIN BdypartDim bdy ON bdy.Code = Body_Part_All
+    LEFT JOIN DiagnosisDim as diag ON diag.Code = Diagnosis_2
+    WHERE Disposition = 8 AND BDYPT LIKE "%ALL PARTS%" AND DIAG IS NOT NULL
+    GROUP BY Diagnosis_2
+) sub
+GROUP BY Diagnosis_All
+ORDER BY count DESC
+'''
+
+, neiss_conn)
+view

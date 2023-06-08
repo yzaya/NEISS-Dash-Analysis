@@ -1,20 +1,21 @@
 Dash Analysis
 
 
-
-Which body part gets injured the most?
-Which body part results in the most fatalities?
+Stratum
+Diagnosis by Product? What cause all the lacerations?
 Is there a race disparity?
 - What are the proportions according to population?
 Is the number of non-binary people going up over time? 
 Heatmap / correlation plot
 Is there a correlation between head injuries and fatalities?
 
+
 Text Analysis:
 Sex related injuries? - text analysis
 Text analysis of bed - how are people being injured on their beds?
 Are bed and sofa related injuries from people moving?
 - use %move%
+What is causing ALL BODY PART injury 
 
 Clean:
 Numbers on Seasonality by Day of Week graph
@@ -54,9 +55,7 @@ All of the tables
 11 	ProductDim
 12 	neiss_all
 
-
-bdy part1 
-bdy part2
+=
 
 Summary:
 This is a workbook to practice SQL, and data handling and visualization in python. 
