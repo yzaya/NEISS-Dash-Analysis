@@ -42,12 +42,6 @@ Order By count Desc
 LIMIT 20
 
 
-Two combine the four columns (2 body part & 2 diagnosis):
-
-It will be tricky to answer this question because body parts affected are collected into two columns, while diagnosis is collected in two main columns, and two 'other' columns. The table we are pulling from has already expanded the body parts column. We must be careful to look out for unecassarily duplicated data. Because we are not creating a view in this case, we have to combine the results of two different tables. This one, which takes the counts for the grouped Diagnosis column:
-
-The two results are collected into a subquery and then concatenated using UNION ALL. The counts for each table are separated into their own columns, D1 and D2. When the counts for one table are present in one column, the other column is set to 0 for that table. When the main query runs, grouping once again by diagnosis, the sums of the two columns are added using SUM(D1+D2). It can be seen that the results in the dataframe below the query are equal to the results the previous two summed together.
-
 view = pd.read_sql(
 '''
 
@@ -93,3 +87,24 @@ ORDER BY count DESC
 
 , neiss_conn)
 view
+
+
+Sample times for individual files Macbook air 2019 1.6 Ghz Dual-Core Intel:
+<br>2:16
+<br>1:57
+<br>2:11
+<br>2:11
+<br>2:44
+<br>2:37
+<br>2:09
+<br>2:15
+<br>2:03
+<br>(after plugging it in)
+<br>1:55
+<br>1:51
+<br>1:44
+<br><br>
+It took just over 2 minutes on average to load each file into the database. The macbook was pushing the excel files into the cloud, so the iteration code stopped working once it reached a file that had happened to.
+
+Conclusion:
+It is clear from the prevalence of floors and stairs at the top of , that gravity does tend to be an issue for people when it comes to being injury free.
